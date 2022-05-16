@@ -9,7 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Module_1", "Module_1", "{05
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Module_2", "Module_2", "{26412CA4-27DE-4CD6-B796-9F2038DCCB90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eni.Demo.Module2", "Eni.Demo.Module2\Eni.Demo.Module2.csproj", "{C3D49EA5-AB83-474A-A650-B92CBB884CEB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eni.Demo.Module2.Lib", "Eni.Demo.Module2\Eni.Demo.Module2.Lib.csproj", "{C3D49EA5-AB83-474A-A650-B92CBB884CEB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eni.Demo.Module2.Console", "Eni.Demo.Module2.Console\Eni.Demo.Module2.Console.csproj", "{373B3D97-22CB-4DE6-ABC3-56739AD553E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +27,10 @@ Global
 		{C3D49EA5-AB83-474A-A650-B92CBB884CEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3D49EA5-AB83-474A-A650-B92CBB884CEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3D49EA5-AB83-474A-A650-B92CBB884CEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{373B3D97-22CB-4DE6-ABC3-56739AD553E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{373B3D97-22CB-4DE6-ABC3-56739AD553E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{373B3D97-22CB-4DE6-ABC3-56739AD553E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{373B3D97-22CB-4DE6-ABC3-56739AD553E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +38,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{0C821E05-7B7D-4408-8CCC-34F2C5879C1F} = {05959F4C-5621-45E4-8AFE-6B217FD0816F}
 		{C3D49EA5-AB83-474A-A650-B92CBB884CEB} = {26412CA4-27DE-4CD6-B796-9F2038DCCB90}
+		{373B3D97-22CB-4DE6-ABC3-56739AD553E6} = {26412CA4-27DE-4CD6-B796-9F2038DCCB90}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {106857CA-CCE2-4A4D-AD20-BE6D20972997}
