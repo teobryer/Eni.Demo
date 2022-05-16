@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Eni.Demo.Module2
+namespace Eni.Demo.Module2.Lib
 {
     public class Personne
     {
