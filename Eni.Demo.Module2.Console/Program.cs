@@ -16,6 +16,12 @@ namespace Eni.Demo.Module2.Console
         static void Main(string[] args)
         {
 
+           
+        }
+
+
+        private static void Demo01()
+        {
             var pointA = new Point(1, 1);
 
 
