@@ -23,5 +23,10 @@ namespace Tp.Linq.BO
         {
             this.Factures.Add(f);
         }
+
+        public override string ToString()
+        {
+            return this.Nom + " " + this.Prenom;
+        }
     }
 }

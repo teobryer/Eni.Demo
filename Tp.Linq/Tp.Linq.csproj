@@ -46,7 +46,6 @@
     <Compile Include="BO\Auteur.cs" />
     <Compile Include="BO\Facture.cs" />
     <Compile Include="BO\Livre.cs" />
-    <Compile Include="Data.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

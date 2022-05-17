@@ -21,5 +21,10 @@ namespace Tp.Linq.BO
         public string Synopsis { get; set; }
         public Auteur Auteur { get; set; }
         public int NbPages { get; set; }
+
+        public override string ToString()
+        {
+            return this.Titre ;
+        }
     }
 }

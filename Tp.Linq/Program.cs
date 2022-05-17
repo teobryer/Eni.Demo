@@ -47,16 +47,46 @@ namespace Tp.Linq
 
 
             Console.WriteLine("Liste des prénoms des auteurs dont le nom commence par G : ");
+            ListeAuteurs.Select(a => a.Nom).Where(nom => nom.First() == 'G').ToList().ForEach(i => Console.Write("{0}\t", i));
+            Console.WriteLine(Environment.NewLine);
+
             Console.WriteLine("Afficher l’auteur ayant écrit le plus de livres : ");
+            Console.WriteLine(ListeLivres.GroupBy(x => x.Auteur).OrderByDescending(x => x.Count()).First().Key);
+            Console.WriteLine(Environment.NewLine);
+
+
+
             Console.WriteLine("Afficher le nombre moyen de pages par livre par auteur : ");
+            ListeLivres.GroupBy(x => x.Auteur).Select(g => new { MoyennePage = g.Average(p => p.NbPages), Auteur = g.Key }).ToList().ForEach(i => Console.Write("{0}\t", i));
+            Console.WriteLine(Environment.NewLine);
+
+
             Console.WriteLine("Afficher le titre du livre avec le plus de pages : ");
+            Console.WriteLine(ListeLivres.Where(li => li.NbPages == ListeLivres.Max(l => l.NbPages)).First());
+            Console.WriteLine(Environment.NewLine);
+
+
             Console.WriteLine("Afficher combien ont gagné les auteurs en moyenne(moyenne des factures) : ");
-            Console.WriteLine("Afficher les auteurs et la liste de leurs livres" : );
+            ListeAuteurs.Select(x => new { MoyenneFacture = x.Factures.Count > 0 ? x.Factures.Average(f => f.Montant) : 0, Auteur = x }).ToList().ForEach(i => Console.Write("{0}\t", i));
+            Console.WriteLine(Environment.NewLine);
+
+
+            Console.WriteLine("Afficher les auteurs et la liste de leurs livres");
+            ListeAuteurs.Select(a => new { Auteur = a, Livres = ListeLivres.Where(l => l.Auteur == a) }).ToList().ForEach(i => { if (i.Livres.Any()) Console.Write("{0} a écrit les livres {1}\t", i.Auteur, i.Livres.Select(l => l.ToString()).Aggregate((x, y) => x.ToString() + "," + y.ToString())); else Console.Write("{0} n'a pas écrit de livres\t", i.Auteur); Console.WriteLine(Environment.NewLine); });
+            Console.WriteLine(Environment.NewLine);
+
             Console.WriteLine("Afficher les titres de tous les livres triés par ordre alphabétique : ");
-            Console.WriteLine("Liste des prénoms des auteurs dont le nom commence par G");
+            ListeLivres.OrderBy(l=> l.Titre).ToList().ForEach(i => Console.Write("{0}\t" + Environment.NewLine, i) );
+            Console.WriteLine(Environment.NewLine);
+
             Console.WriteLine("Afficher la liste des livres dont le nombre de pagesest supérieurà la moyenne :");
+            ListeLivres.Where(l => l.NbPages > ListeLivres.Average(x => x.NbPages)).ToList().ForEach(i => Console.Write("{0}\t" + Environment.NewLine, i)); 
+            Console.WriteLine(Environment.NewLine);
+
             Console.WriteLine("Afficher l'auteur ayant écrit le moins de livres :");
-           
+            Console.WriteLine(ListeLivres.GroupBy(x => x.Auteur).OrderByDescending(x => x.Count()).Last().Key);
+            Console.WriteLine(Environment.NewLine);
+
 
 
 
