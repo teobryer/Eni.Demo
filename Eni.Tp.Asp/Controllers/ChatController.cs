@@ -21,7 +21,19 @@ namespace Eni.Tp.Asp.Controllers
         // GET: ChatController/Details/5
         public ActionResult Details(int id)
         {
-            return View(listeChats.Where(x => x.Id == id).FirstOrDefault());
+            var chat = listeChats.Where(x => x.Id == id).FirstOrDefault();
+
+            if(chat != null)
+            {
+                return View(chat);
+
+            }
+
+            else
+            {
+                return RedirectToAction(nameof(Index));
+            }
+           
         }
 
         // GET: ChatController/Create
@@ -62,7 +74,18 @@ namespace Eni.Tp.Asp.Controllers
         // GET: ChatController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View(listeChats.Where(x=> x.Id == id).FirstOrDefault());
+            var chat = listeChats.Where(x => x.Id == id).FirstOrDefault();
+
+            if (chat != null)
+            {
+                return View(chat);
+
+            }
+
+            else
+            {
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         // POST: ChatController/Edit/5
@@ -94,7 +117,19 @@ namespace Eni.Tp.Asp.Controllers
         // GET: ChatController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View(listeChats.Where(x => x.Id == id).FirstOrDefault());
+            var chat = listeChats.Where(x => x.Id == id).FirstOrDefault();
+
+            if (chat != null)
+            {
+                return View(chat);
+
+            }
+
+            else
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            
         }
 
         // POST: ChatController/Delete/5
