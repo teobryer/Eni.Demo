@@ -1,0 +1,32 @@
+﻿@model Eni.TP_Pizza.Models.Pizza
+
+<h4>
+  Les ingredients
+</h4>
+<p>@Model.Pate.Nom</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nom)
+            </th>
+            
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Ingredients) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nom)
+            </td>
+           
+        </tr>
+}
+    </tbody>
+</table>
