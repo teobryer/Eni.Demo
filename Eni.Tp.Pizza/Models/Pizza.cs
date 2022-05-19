@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,11 +10,17 @@ namespace Eni.TP_Pizza.Models
     public class Pizza
     {
         public int Id { get; set; }
+        [Required]
+        [StringLength(20, ErrorMessage = "{0} doit avoir une longueur comprise entre  {2} et {1}.", MinimumLength = 5)]
         public string Nom { get; set; }
+     
         public Pate Pate { get; set; }
         public List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
 
-        public  List<int> ListeIngIds { get; set; }
+        [MinLength(2, ErrorMessage = "{0} doit avoir au moins {1} ingrédients")]
+        [MaxLength(5, ErrorMessage = "{0} doit avoir au maximum {1} ingrédients")]
+        public List<int> ListeIngIds { get; set; } = new List<int>();
+        [Required]
         public int PateId { get; set; }
 
 

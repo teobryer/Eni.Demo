@@ -1,5 +1,5 @@
 ﻿@model Eni.TP_Pizza.Models.Pizza
-
+@using Eni.TP_Pizza.Extensions
 
 @{ ViewData["Title"] = "Create";
     var ingredients = (List<Ingredient>)this.ViewData["ingredients"];
@@ -20,14 +20,20 @@
             <div class="form-group">
                 <label asp-for="Nom" class="control-label"></label>
                 <input asp-for="Nom" class="form-control" />
+                <span asp-validation-for="Nom" class="text-danger"></span>
+                <br />
                 <label asp-for="Pate" class="control-label"></label>
                 <select asp-for="PateId" asp-items="@selectPate"></select>
+                <span asp-validation-for="PateId" class="text-danger"></span>
+                <br />
+
                 <label asp-for="ListeIngIds" class="control-label"></label>
                 <select asp-for="ListeIngIds" asp-items=" @selectIngredients"></select>
-                <span asp-validation-for="Nom" class="text-danger"></span>
+                <span asp-validation-for="ListeIngIds" class="text-danger"></span>
+                <br />
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                @Html.CustomSubmit("Ajouter").
             </div>
         </form>
     </div>
