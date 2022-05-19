@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Eni.TP_Pizza.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Eni.TP_Pizza.Services;
 
 namespace Eni.TP_Pizza.Controllers
 {
@@ -14,21 +15,28 @@ namespace Eni.TP_Pizza.Controllers
     {
 
         private readonly IMapper mapper;
-        public PizzaController(IMapper myMapper)
+
+        private readonly IPizzaService pizzaService;
+        private readonly IPateService pateService;
+        private readonly IIngredientService ingredientService;
+        public PizzaController(IMapper myMapper, IIngredientService ingredientService, IPizzaService pizzaService, IPateService pateService)
         {
             this.mapper = myMapper;
+            this.pizzaService = pizzaService;
+            this.ingredientService = ingredientService;
+            this.pateService = pateService;
         }
-        private static List<Pizza> listePizzas = Pizza.PizzaDisponibles;
+        //private static List<Pizza> listePizzas = pizzaService.recupererListePizza();
         // GET: PizzaController
         public ActionResult Index()
         {
-            return View(listePizzas);
+            return View(pizzaService.recupererListePizza());
         }
 
         // GET: PizzaController/Details/5
         public ActionResult Details(int id)
         {
-            var pizza = listePizzas.First(p => p.Id == id);
+            var pizza = pizzaService.recupererListePizza().First(p => p.Id == id);
 
             if (pizza != null)
             {
@@ -44,8 +52,8 @@ namespace Eni.TP_Pizza.Controllers
         {
 
 
-            ViewData["ingredients"] = Pizza.IngredientsDisponibles;
-            ViewData["pates"] = Pizza.PatesDisponibles;
+            ViewData["ingredients"] = ingredientService.recupererListeIngredients();
+            ViewData["pates"] = pateService.recupererListePates();
             return View();
 
 
@@ -57,15 +65,15 @@ namespace Eni.TP_Pizza.Controllers
         public ActionResult Create(Pizza pizza)
         {
 
-            ViewData["ingredients"] = Pizza.IngredientsDisponibles;
-            ViewData["pates"] = Pizza.PatesDisponibles;
+            ViewData["ingredients"] = ingredientService.recupererListeIngredients();
+            ViewData["pates"] = pateService.recupererListePates();
             try
             {
 
                 if (!ModelState.IsValid)
                 {
-                    ViewData["ingredients"] = Pizza.IngredientsDisponibles;
-                    ViewData["pates"] = Pizza.PatesDisponibles;
+                    ViewData["ingredients"] = ingredientService.recupererListeIngredients();
+                    ViewData["pates"] = pateService.recupererListePates();
 
                     return View(pizza);
 
@@ -79,25 +87,25 @@ namespace Eni.TP_Pizza.Controllers
                     pizza.ListeIngIds.ForEach(id => pizza.Ingredients.Add(Pizza.IngredientsDisponibles.First(ing => ing.Id == id)));
                 }
 
-                pizza.Pate = Pizza.PatesDisponibles.First(pate => pate.Id == pizza.PateId);
+                pizza.Pate = pateService.recupererListePates().First(pate => pate.Id == pizza.PateId);
 
-                pizza.Id = listePizzas.Max(chat => chat.Id) + 1;
+                pizza.Id = pizzaService.recupererListePizza().Max(chat => chat.Id) + 1;
 
-                if (listePizzas.Any(p => p.Nom == pizza.Nom) ) {
+                if (pizzaService.recupererListePizza().Any(p => p.Nom == pizza.Nom) ) {
 
                     ModelState.AddModelError(nameof(Pizza.Nom), "Le nom de la pizza doit être unique");
                     return View(pizza);
                 }
 
-                if(listePizzas.Select(p => p.ListeIngIds).Contains(pizza.ListeIngIds))
+                if (pizzaService.recupererListePizza().Select(p => p.ListeIngIds).Any(c => c.SequenceEqual(pizza.ListeIngIds)))
                 {
                     ModelState.AddModelError(nameof(Pizza.Nom), "Une composition de pizza ne peut pas être similaire à une autre pizza");
                     return View(pizza);
                 }
 
 
-                
-                listePizzas.Add(pizza);
+
+                pizzaService.recupererListePizza().Add(pizza);
 
 
                 return RedirectToAction(nameof(Index));
@@ -111,9 +119,9 @@ namespace Eni.TP_Pizza.Controllers
         // GET: PizzaController/Edit/5
         public ActionResult Edit(int id)
         {
-            var pizza = listePizzas.First(p => p.Id == id);
-            ViewData["ingredients"] = Pizza.IngredientsDisponibles;
-            ViewData["pates"] = Pizza.PatesDisponibles;
+            var pizza = pizzaService.recupererListePizza().First(p => p.Id == id);
+            ViewData["ingredients"] = ingredientService.recupererListeIngredients();
+            ViewData["pates"] = pateService.recupererListePates();
 
 
 
@@ -133,8 +141,8 @@ namespace Eni.TP_Pizza.Controllers
         public ActionResult Edit(int id, Pizza pizza)
         {
 
-            ViewData["ingredients"] = Pizza.IngredientsDisponibles;
-            ViewData["pates"] = Pizza.PatesDisponibles;
+            ViewData["ingredients"] = ingredientService.recupererListeIngredients();
+            ViewData["pates"] = pateService.recupererListePates();
             try
             {
 
@@ -142,8 +150,8 @@ namespace Eni.TP_Pizza.Controllers
 
                 if (!ModelState.IsValid)
                 {
-                    ViewData["ingredients"] = Pizza.IngredientsDisponibles;
-                    ViewData["pates"] = Pizza.PatesDisponibles;
+                    ViewData["ingredients"] = ingredientService.recupererListeIngredients();
+                    ViewData["pates"] = pateService.recupererListePates();
 
                     return View(pizza);
 
@@ -151,23 +159,23 @@ namespace Eni.TP_Pizza.Controllers
 
 
 
-                if (listePizzas.Any(p => p.Nom == pizza.Nom && p.Id != pizza.Id))
+                if (pizzaService.recupererListePizza().Any(p => p.Nom == pizza.Nom && p.Id != pizza.Id))
                 {
 
                     ModelState.AddModelError(nameof(Pizza.Nom), "Le nom de la pizza doit être unique");
                     return View(pizza);
                 }
 
-                if (listePizzas.Where(p=> pizza.Id != p.Id).Select(p => p.ListeIngIds).Any(c => c.SequenceEqual(pizza.ListeIngIds)))
+                if (pizzaService.recupererListePizza().Where(p=> pizza.Id != p.Id).Select(p => p.ListeIngIds).Any(c => c.SequenceEqual(pizza.ListeIngIds)))
                 {
                     ModelState.AddModelError(nameof(Pizza.ListeIngIds), "Une composition de pizza ne peut pas être similaire à une autre pizza");
                     return View(pizza);
                 }
-                Pizza oldPizza = listePizzas.Where(x => x.Id == id).FirstOrDefault();
+                Pizza oldPizza = pizzaService.recupererListePizza().Where(x => x.Id == id).FirstOrDefault();
                 mapper.Map(pizza, oldPizza);
                 oldPizza.Ingredients = new List<Ingredient>();
                 oldPizza.ListeIngIds.ForEach(id => oldPizza.Ingredients.Add(Pizza.IngredientsDisponibles.First(ing => ing.Id == id)));
-                oldPizza.Pate = Pizza.PatesDisponibles.First(pate => pate.Id == oldPizza.PateId);
+                oldPizza.Pate = pateService.recupererListePates().First(pate => pate.Id == oldPizza.PateId);
 
 
 
@@ -188,7 +196,7 @@ namespace Eni.TP_Pizza.Controllers
         // GET: PizzaController/Delete/5
         public ActionResult Delete(int id)
         {
-            var pizza = listePizzas.First(p => p.Id == id);
+            var pizza = pizzaService.recupererListePizza().First(p => p.Id == id);
 
             if (pizza != null)
             {
@@ -204,10 +212,10 @@ namespace Eni.TP_Pizza.Controllers
         public ActionResult Delete(int id, Pizza pizza)
         {
 
-            var pizzaToDelete = listePizzas.First(p => p.Id == id);
+            var pizzaToDelete = pizzaService.recupererListePizza().First(p => p.Id == id);
             try
             {
-                listePizzas.Remove(pizzaToDelete);
+                pizzaService.recupererListePizza().Remove(pizzaToDelete);
 
                 return RedirectToAction(nameof(Index));
             }

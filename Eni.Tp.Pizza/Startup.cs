@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Eni.TP_Pizza.Profile;
+using Eni.TP_Pizza.Services;
 
 namespace Eni.TP_Pizza
 {
@@ -25,6 +26,9 @@ namespace Eni.TP_Pizza
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient(typeof(IPizzaService), typeof(PizzaService)) ;
+            services.AddTransient(typeof(IPateService), typeof(PateService));
+            services.AddTransient(typeof(IIngredientService), typeof(IngredientService));
             services.AddControllersWithViews();
             services.AddAutoMapper(typeof(BusinessProfile));
         }
