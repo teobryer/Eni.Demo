@@ -50,13 +50,16 @@ namespace Eni.TP_Pizza.Controllers
         // GET: PizzaController/Create
         public ActionResult Create()
         {
-
-
-            ViewData["ingredients"] = ingredientService.recupererListeIngredients();
-            ViewData["pates"] = pateService.recupererListePates();
+            InitListesViewData();
             return View();
 
 
+        }
+
+        private void InitListesViewData()
+        {
+            ViewData["ingredients"] = ingredientService.recupererListeIngredients();
+            ViewData["pates"] = pateService.recupererListePates();
         }
 
         // POST: PizzaController/Create
@@ -65,8 +68,7 @@ namespace Eni.TP_Pizza.Controllers
         public ActionResult Create(Pizza pizza)
         {
 
-            ViewData["ingredients"] = ingredientService.recupererListeIngredients();
-            ViewData["pates"] = pateService.recupererListePates();
+            InitListesViewData();
             try
             {
 
@@ -120,8 +122,7 @@ namespace Eni.TP_Pizza.Controllers
         public ActionResult Edit(int id)
         {
             var pizza = pizzaService.recupererListePizza().First(p => p.Id == id);
-            ViewData["ingredients"] = ingredientService.recupererListeIngredients();
-            ViewData["pates"] = pateService.recupererListePates();
+            InitListesViewData();
 
 
 
@@ -141,8 +142,7 @@ namespace Eni.TP_Pizza.Controllers
         public ActionResult Edit(int id, Pizza pizza)
         {
 
-            ViewData["ingredients"] = ingredientService.recupererListeIngredients();
-            ViewData["pates"] = pateService.recupererListePates();
+            InitListesViewData();
             try
             {
 
@@ -150,8 +150,7 @@ namespace Eni.TP_Pizza.Controllers
 
                 if (!ModelState.IsValid)
                 {
-                    ViewData["ingredients"] = ingredientService.recupererListeIngredients();
-                    ViewData["pates"] = pateService.recupererListePates();
+                  
 
                     return View(pizza);
 
