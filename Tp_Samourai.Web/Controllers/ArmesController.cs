@@ -12,9 +12,9 @@ namespace Tp_Samourai.Web.Controllers
 {
     public class ArmesController : Controller
     {
-        private readonly ArmeAccessLayer armesDAL;
+        private readonly AccesLayer<Arme> armesDAL;
 
-        public ArmesController(ArmeAccessLayer armes)
+        public ArmesController(AccesLayer<Arme> armes)
         {
             armesDAL = armes;
         }
@@ -22,7 +22,9 @@ namespace Tp_Samourai.Web.Controllers
         // GET: Armes
         public async Task<IActionResult> Index()
         {
-            return View(armesDAL.GetArmesAsync());
+
+            var armes = await armesDAL.recupererTous();
+            return View(armes);
         }
 
         // GET: Armes/Details/5
@@ -33,7 +35,7 @@ namespace Tp_Samourai.Web.Controllers
                 return NotFound();
             }
 
-            var arme = armesDAL.GetArmesAsync().Result
+            var arme = armesDAL.recupererTous().Result
                 .FirstOrDefault(m => m.Id == id);
             if (arme == null)
             {
@@ -58,8 +60,7 @@ namespace Tp_Samourai.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(arme);
-                await _context.SaveChangesAsync();
+                await armesDAL.ajouter(arme);
                 return RedirectToAction(nameof(Index));
             }
             return View(arme);
@@ -73,7 +74,7 @@ namespace Tp_Samourai.Web.Controllers
                 return NotFound();
             }
 
-            var arme = await _context.Armes.FindAsync(id);
+            var arme = await armesDAL.recupererParId((int)id);
             if (arme == null)
             {
                 return NotFound();
@@ -97,8 +98,7 @@ namespace Tp_Samourai.Web.Controllers
             {
                 try
                 {
-                    _context.Update(arme);
-                    await _context.SaveChangesAsync();
+                    await armesDAL.modifier(id, arme);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -124,8 +124,7 @@ namespace Tp_Samourai.Web.Controllers
                 return NotFound();
             }
 
-            var arme = await _context.Armes
-                .FirstOrDefaultAsync(m => m.Id == id);
+           var arme = await armesDAL.recupererParId((int)id);
             if (arme == null)
             {
                 return NotFound();
@@ -139,15 +138,13 @@ namespace Tp_Samourai.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var arme = await _context.Armes.FindAsync(id);
-            _context.Armes.Remove(arme);
-            await _context.SaveChangesAsync();
+            await armesDAL.supprimer(id);
             return RedirectToAction(nameof(Index));
         }
 
         private bool ArmeExists(int id)
         {
-            return _context.Armes.Any(e => e.Id == id);
+            return armesDAL.Exists(id);
         }
     }
 }
