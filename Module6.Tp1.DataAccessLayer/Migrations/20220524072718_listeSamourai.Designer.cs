@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Module6.Tp1.DataAccessLayer;
 
 namespace Module6.Tp1.DataAccessLayer.Migrations
 {
     [DbContext(typeof(DojoContext))]
-    partial class DojoContextModelSnapshot : ModelSnapshot
+    [Migration("20220524072718_listeSamourai")]
+    partial class listeSamourai
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,14 +28,8 @@ namespace Module6.Tp1.DataAccessLayer.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("Degats")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("LastModifiedDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Nom")
                         .HasColumnType("nvarchar(max)");
@@ -53,14 +49,8 @@ namespace Module6.Tp1.DataAccessLayer.Migrations
                     b.Property<int?>("ArmeId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("Force")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("LastModifiedDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Nom")
                         .HasColumnType("nvarchar(max)");

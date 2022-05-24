@@ -37,19 +37,20 @@
         }
 
         public async Task<List<SamouraiDto>> GetAllAsync()
-             => await this.accessLayer.GetCollection()
+             => await this.accessLayer.GetCollection(navigationProperties: data => data.Include(x => x.Arme))
                 .Select(x => new SamouraiDto
                 {
                     Id = x.Id,
                     Force = x.Force,
                     Nom = x.Nom,
-                    ArmeId = x.ArmeId
+                    ArmeId = x.ArmeId,
+                    ArmeNom =x.Arme !=null ? x.Arme.Nom : ""
                 })
                 .ToListAsync();
 
         public async Task<SamouraiDto> GetByIdAsync(int id)
         {
-            var samourai = await this.accessLayer.GetSingleAsync(filter: a => a.Id == id);
+            var samourai = await this.accessLayer.GetSingleAsync(filter: a => a.Id == id, navigationProperties:data => data.Include(x=> x.Arme));
 
             return samourai is null
                  ? null
@@ -58,7 +59,8 @@
                      Id = samourai.Id,
                      Force = samourai.Force,
                      Nom = samourai.Nom,
-                     ArmeId = samourai.ArmeId
+                     ArmeId = samourai.ArmeId, 
+                     ArmeNom =  samourai.Arme?.Nom
                  };
         }
 

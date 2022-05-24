@@ -11,6 +11,7 @@ namespace Module6.Tp1.Web.Models
         public int Force { get; set; }
         public string Nom { get; set; }
         public int ArmeId { get; set; }
+        public string ArmeNom { get; set; }
 
        
 

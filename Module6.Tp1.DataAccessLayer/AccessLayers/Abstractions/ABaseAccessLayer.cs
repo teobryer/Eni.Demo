@@ -236,7 +236,7 @@
         /// </summary>
         /// <param name="id">The object id of data model to remove.</param>
         /// <returns>Returns number of state entries written to the database.</returns>
-        public async Task<int> RemoveAsync(long id)
+        public virtual async Task<int> RemoveAsync(long id)
         {
             var model = this.ModelSet.FirstOrDefault(model => model.Id == id);
             if (model == null)
