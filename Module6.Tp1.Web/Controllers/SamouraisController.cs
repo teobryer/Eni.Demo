@@ -10,24 +10,27 @@
     using Module6.Tp1.Web.Business.DataProviders.Dtos;
     using Module6.Tp1.Web.Extensions;
     using Module6.Tp1.Web.Models;
-
+    using Module6.Tp1.Web.Business.DataProviders;
     public class SamouraisController : Controller
     {
         private readonly ISamouraiService samouraiService;
         private readonly IArmeService armeService;
+        private readonly IArtMartialService artsMartiauxService;
         private readonly IMapper mapper;
 
-        public SamouraisController(IMapper mapper, ISamouraiService samouraiService, IArmeService armeService)
+        public SamouraisController(IMapper mapper, ISamouraiService samouraiService, IArmeService armeService, IArtMartialService artsMartiauxService)
         {
             this.mapper = mapper;
             this.samouraiService = samouraiService;
             this.armeService = armeService;
+            this.artsMartiauxService = artsMartiauxService;
         }
 
         private async Task InitListesViewData()
         {
 
             ViewData["armes"] = (await armeService.GetAllAsync()).Select(x=> x.ToVM(mapper)).ToList();
+            ViewData["artsMartiaux"] = (await artsMartiauxService.GetAllAsync()).Select(x=> x.ToVM(mapper)).ToList();
         
         }
 
@@ -71,11 +74,25 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(SamouraiViewModel samouraiVm)
         {
+
+            await InitListesViewData();
             if (ModelState.IsValid)
             {
                 var samouraiDto = this.mapper.Map<SamouraiDto>(samouraiVm);
-                await this.samouraiService.AddAsync(samouraiDto);
-                return RedirectToAction(nameof(Index));
+
+                try
+                {
+                    await this.samouraiService.AddAsync(samouraiDto);
+                    return RedirectToAction(nameof(Index));
+                }
+
+                catch (ArmeAlreadyUseException)
+                {
+                    ModelState.AddModelError(nameof(SamouraiViewModel.ArmeId), "Cette arme est déjà utilisée par un autre Samourai");
+                    return View(samouraiVm);
+                }
+                
+               
             }
             return View(samouraiVm);
         }
@@ -107,6 +124,8 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id,  SamouraiViewModel samouraiVm)
         {
+
+            await InitListesViewData();
             if (id != samouraiVm.Id)
             {
                 return NotFound();
@@ -119,6 +138,15 @@
                     var samouraiDto = this.mapper.Map<SamouraiDto>(samouraiVm);
                     await this.samouraiService.UpdateAsync(id, samouraiDto);
                 }
+
+                catch (ArmeAlreadyUseException)
+                {
+                      
+                
+                    ModelState.AddModelError(nameof(SamouraiViewModel.ArmeId), "Cette arme est déjà utilisée par un autre Samourai");
+                    return View(samouraiVm);
+                
+            }
                 catch (Exception)
                 {
                     if (!await this.SamouraiExists(samouraiVm.Id))
@@ -130,6 +158,7 @@
                         throw;
                     }
                 }
+                
                 return RedirectToAction(nameof(Index));
             }
             return View(samouraiVm);

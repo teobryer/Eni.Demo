@@ -13,6 +13,7 @@
 
             services.AddTransient<IArmeService, ArmeService>();
             services.AddTransient<ISamouraiService, SamouraiService>();
+            services.AddTransient<IArtMartialService, ArtMartialService>();
             return services;
         }
     }

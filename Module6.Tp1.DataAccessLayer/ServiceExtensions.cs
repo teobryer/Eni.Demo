@@ -12,6 +12,7 @@ namespace Module6.Tp1.DataAccessLayer
 
             services.AddTransient<IArmeAccessLayer, ArmeAccessLayer>();
             services.AddTransient<ISamouraiAccessLayer, SamouraiAccessLayer>();
+            services.AddTransient<IArtMartialAccessLayer, ArtMartielAccessLayer>();
 
             return services;
         }

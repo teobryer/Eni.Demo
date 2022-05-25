@@ -12,6 +12,7 @@
     {
         internal DbSet<Arme> Armes { get; set; }
         internal DbSet<Samourai> Samourais { get; set; }
+        internal DbSet<ArtMartial> ArtMartiaux { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

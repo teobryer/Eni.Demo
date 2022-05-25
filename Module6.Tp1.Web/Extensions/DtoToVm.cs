@@ -33,6 +33,16 @@ namespace Module6.Tp1.Web.Extensions
             return mapper.Map<ArmeDto>(vm);
         }
 
+        public static ArtMartialViewModel ToVM(this ArtMartialDto dto, IMapper mapper)
+        {
+            return mapper.Map<ArtMartialViewModel>(dto);
+        }
+
+        public static ArtMartialDto ToDTO(this ArtMartialViewModel vm, IMapper mapper)
+        {
+            return mapper.Map<ArtMartialDto>(vm);
+        }
+
 
     }
 }

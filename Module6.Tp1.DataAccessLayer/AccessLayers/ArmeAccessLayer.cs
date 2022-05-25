@@ -22,18 +22,18 @@
 
 
 
-            var model = this.ModelSet.Include(a=> a.Samourais).FirstOrDefault(model => model.Id == id);
+            var model = this.ModelSet.Include(a=> a.Samourai).FirstOrDefault(model => model.Id == id);
             if (model == null)
             {
                 return -1;
             }
 
-            foreach(var s in model.Samourais)
+            
+            if(null == model.Samourai)
             {
-                s.ArmeId = null;
+                _ = this.ModelSet.Remove(model);
             }
-
-            _ = this.ModelSet.Remove(model);
+            
             return await this.Context.SaveChangesAsync().ConfigureAwait(false);
 
 

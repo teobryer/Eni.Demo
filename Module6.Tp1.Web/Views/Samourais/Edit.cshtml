@@ -5,6 +5,10 @@
 
     var armes = (List<ArmeViewModel>)this.ViewData["armes"];
     var selectArmes = armes.Select(i => new SelectListItem(i.Nom, i.Id.ToString()));
+
+
+    var artsMartiaux = (List<ArtMartialViewModel>)this.ViewData["artsMartiaux"];
+    var selectArtsMartiaux = artsMartiaux.Select(i => new SelectListItem(i.Nom, i.Id.ToString()));
 }
 
 <h1>Edit</h1>
@@ -31,6 +35,12 @@
                 <label asp-for="ArmeId" class="control-label"></label>
                 <select asp-for="ArmeId" asp-items="@selectArmes"></select>
                 <span asp-validation-for="ArmeId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ListeArtsMartiauxId" class="control-label"></label>
+                <select asp-for="ListeArtsMartiauxId" asp-items=" @selectArtsMartiaux"></select>
+                <span asp-validation-for="ListeArtsMartiauxId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

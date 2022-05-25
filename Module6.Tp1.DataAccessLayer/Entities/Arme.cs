@@ -10,8 +10,8 @@
         public string Nom { get; set; }
         public int Degats { get; set; }
 
-       // [InverseProperty("Arme")]
-        public virtual  List<Samourai> Samourais { get; set; }
+        public int? SamouraiId { get; set; }
+        public virtual  Samourai Samourai { get; set; }
 
         
     }

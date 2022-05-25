@@ -3,9 +3,14 @@
 
 
 @{ ViewData["Title"] = "Create";
-  
+
     var armes = (List<ArmeViewModel>)this.ViewData["armes"];
     var selectArmes = armes.Select(i => new SelectListItem(i.Nom, i.Id.ToString()));
+
+
+
+    var artsMartiaux = (List<ArtMartialViewModel>)this.ViewData["artsMartiaux"];
+    var selectArtsMartiaux = artsMartiaux.Select(i => new SelectListItem(i.Nom, i.Id.ToString()));
 }
 
 <h1>Create</h1>
@@ -34,8 +39,14 @@
                 <span asp-validation-for="ArmeId" class="text-danger"></span>
             </div>
 
-           
-           
+            <div class="form-group">
+                <label asp-for="ListeArtsMartiauxId" class="control-label"></label>
+                <select asp-for="ListeArtsMartiauxId" asp-items=" @selectArtsMartiaux"></select>
+                <span asp-validation-for="ListeArtsMartiauxId" class="text-danger"></span>
+            </div>
+
+
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
