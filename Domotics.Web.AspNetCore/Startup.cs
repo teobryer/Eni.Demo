@@ -4,15 +4,12 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Module6.Tp1.DataAccessLayer;
-using Module6.Tp1.Web.Business;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-
-namespace Module6.Tp1.Web
+namespace Domotics.Web.AspNetCore
 {
     public class Startup
     {
@@ -27,10 +24,6 @@ namespace Module6.Tp1.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddAutoMapper(typeof(Startup));
-            services.AddBusiness();
-     
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,7 +32,6 @@ namespace Module6.Tp1.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            
             }
             else
             {
@@ -60,9 +52,6 @@ namespace Module6.Tp1.Web
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-
-
-          
         }
     }
 }
